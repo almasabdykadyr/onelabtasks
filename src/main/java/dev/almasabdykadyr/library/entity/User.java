@@ -1,0 +1,31 @@
+package dev.almasabdykadyr.library.entity;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class User {
+
+    @NotNull
+    private Long id;
+    @Email
+    private String email;
+    @NotBlank
+    private String password;
+    @NotBlank
+    private String firstName;
+    @NotBlank
+    private String lastName;
+    @NotNull
+    private LocalDateTime createdAt;
+}
