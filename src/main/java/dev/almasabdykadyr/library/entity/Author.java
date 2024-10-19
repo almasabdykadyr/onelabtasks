@@ -5,15 +5,16 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Author {
 
+    @Id
     @NotNull
     private Long id;
     @NotBlank
@@ -22,7 +23,4 @@ public class Author {
     private String lastName;
     @NotNull
     private LocalDateTime createdAt;
-
-
-    private List<Book> books;
 }
