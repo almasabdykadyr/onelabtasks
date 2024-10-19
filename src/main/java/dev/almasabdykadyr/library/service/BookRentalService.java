@@ -22,7 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BookRentalService {
 
-    private final int NUMBER_OF_DUE_DAYS = 10;
+    private static final int NUMBER_OF_DUE_DAYS = 10;
 
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
