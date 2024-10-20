@@ -38,6 +38,11 @@ public class BookRentalService {
         return userRepository.save(user);
     }
 
+    public List<User> listAllUsers() {
+
+        return userRepository.findAll();
+    }
+
     public Book addBook(BookRequest request) {
         Book book = Book.builder()
                 .isbn(request.isbn())
@@ -49,8 +54,12 @@ public class BookRentalService {
         return bookRepository.save(book);
     }
 
+    public List<Book> listAllBooks() {
+        return bookRepository.findAll();
+    }
+
     // Rent a book to a user
-    public Rental rentBook(NewRentalRequest request) {
+    public Rental rent(NewRentalRequest request) {
         Optional<User> userOpt = userRepository.findById(request.userId());
         Optional<Book> bookOpt = bookRepository.findById(request.bookId());
 
@@ -67,7 +76,7 @@ public class BookRentalService {
         return rentalRepository.save(rental);
     }
 
-    public Rental returnBook(Long rentId) {
+    public Rental returnRent(Long rentId) {
         Optional<Rental> optRental = rentalRepository.findById(rentId);
         if (optRental.isEmpty()) throw new IllegalArgumentException("Rental not found");
 
@@ -81,13 +90,13 @@ public class BookRentalService {
         return rentalRepository.findAll();
     }
 
-    public List<Rental> findRentalsByUser(Long userId) {
+    public List<Rental> findRentalsByUserId(Long userId) {
         return rentalRepository.findAll().stream()
                 .filter(rental -> rental.getUser().getId().equals(userId))
                 .toList();
     }
 
-    public List<Rental> findRentalsByBook(Long bookId) {
+    public List<Rental> findRentalsByBookId(Long bookId) {
         return rentalRepository.findAll().stream()
                 .filter(rental -> rental.getBook().getId().equals(bookId))
                 .toList();

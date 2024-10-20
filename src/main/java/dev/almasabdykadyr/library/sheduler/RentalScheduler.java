@@ -21,6 +21,6 @@ public class RentalScheduler {
 
         List<Rental> overdueRentals = repository.findAll().stream().filter(r -> r.getStatus() == RentStatus.RENTED && r.getDueDate().isBefore(LocalDate.now())).toList();
         overdueRentals = overdueRentals.stream().peek(r -> r.setStatus(RentStatus.OVERDUE)).toList();
-        overdueRentals.forEach(repository::update);
+        repository.saveAll(overdueRentals);
     }
 }
