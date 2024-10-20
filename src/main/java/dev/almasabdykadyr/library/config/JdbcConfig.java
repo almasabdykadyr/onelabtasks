@@ -10,9 +10,9 @@ import javax.sql.DataSource;
 @Configuration
 public class JdbcConfig {
 
-    @Bean
-    @ConfigurationProperties("spring.datasource")
-    public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
-    }
+//    @Bean
+//    @ConfigurationProperties("spring.datasource")
+//    public DataSource dataSource() {
+//        return DataSourceBuilder.create().build();
+//    }
 }
