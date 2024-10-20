@@ -1,4 +1,4 @@
-CREATE TABLE author
+CREATE TABLE authors
 (
     id        BIGINT       NOT NULL PRIMARY KEY,
     firstname VARCHAR(255) NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE author
     createdAt TIMESTAMP    NOT NULL
 );
 
-CREATE TABLE book
+CREATE TABLE books
 (
     id           BIGINT    NOT NULL PRIMARY KEY,
     isbn         VARCHAR(17),
@@ -15,10 +15,10 @@ CREATE TABLE book
     author_id    BIGINT    NOT NULL,
     published_at DATE,
     created_at   TIMESTAMP NOT NULL,
-    FOREIGN KEY (author_id) REFERENCES author(id)
+    FOREIGN KEY (author_id) REFERENCES authors(id)
 );
 
-CREATE TABLE "user"
+CREATE TABLE users
 (
     id        BIGINT       NOT NULL PRIMARY KEY,
     email     VARCHAR(255) NOT NULL UNIQUE,
@@ -28,7 +28,7 @@ CREATE TABLE "user"
     createdAt TIMESTAMP    NOT NULL
 );
 
-CREATE TABLE rental
+CREATE TABLE rentals
 (
     id        BIGINT      NOT NULL PRIMARY KEY,
     book_id   BIGINT      NOT NULL,
@@ -36,6 +36,6 @@ CREATE TABLE rental
     status    VARCHAR(50) NOT NULL,
     dueDate   DATE        NOT NULL,
     createdAt TIMESTAMP   NOT NULL,
-    FOREIGN KEY (book_id) REFERENCES book(id),
-    FOREIGN KEY (user_id) REFERENCES "user"(id)
+    FOREIGN KEY (book_id) REFERENCES books(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
