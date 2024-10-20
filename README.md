@@ -115,8 +115,8 @@ Rental {
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-repo/book-rental-service.git
-   cd book-rental-service
+   https://github.com/almasabdykadyr/onelabtasks/tree/task1.git
+   cd onelabtasks
    ```
 
 2. **Build the project**:
