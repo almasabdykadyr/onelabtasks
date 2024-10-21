@@ -5,6 +5,8 @@ import dev.almasabdykadyr.library.dto.BookRequest;
 import dev.almasabdykadyr.library.dto.NewRentalRequest;
 import dev.almasabdykadyr.library.dto.UserRequest;
 import dev.almasabdykadyr.library.entity.*;
+import dev.almasabdykadyr.library.exception.BookNotFoundException;
+import dev.almasabdykadyr.library.exception.UserNotFoundException;
 import dev.almasabdykadyr.library.repo.AuthorRepository;
 import dev.almasabdykadyr.library.repo.BookRepository;
 import dev.almasabdykadyr.library.repo.RentalRepository;
@@ -34,6 +36,7 @@ public class BookRentalService {
                 .password(request.password())
                 .firstName(request.firstName())
                 .lastName(request.lastName())
+                .createdAt(LocalDateTime.now())
                 .build();
         return userRepository.save(user);
     }
@@ -49,6 +52,7 @@ public class BookRentalService {
                 .title(request.title())
                 .description(request.description())
                 .publishedAt(request.publishedAt())
+                .authorId(request.authorId())
                 .createdAt(LocalDateTime.now())
                 .build();
         return bookRepository.save(book);
@@ -63,6 +67,7 @@ public class BookRentalService {
         Author author = Author.builder()
                 .firstName(request.firstName())
                 .lastName(request.lastName())
+                .createdAt(LocalDateTime.now())
                 .build();
 
         return authorRepository.save(author);
@@ -77,15 +82,20 @@ public class BookRentalService {
         Optional<User> userOpt = userRepository.findById(request.userId());
         Optional<Book> bookOpt = bookRepository.findById(request.bookId());
 
-        if (userOpt.isEmpty() || bookOpt.isEmpty()) {
-            throw new IllegalArgumentException("User or Book not found");
+        if (userOpt.isEmpty()) {
+            throw new UserNotFoundException("User not found");
+        }
+
+        if (bookOpt.isEmpty()) {
+            throw new BookNotFoundException("Book not found");
         }
 
         Rental rental = Rental.builder()
-                .user(userOpt.get())
-                .book(bookOpt.get())
+                .userId(request.userId())
+                .bookId(request.bookId())
                 .status(RentStatus.RENTED)
                 .dueDate(LocalDate.now().plusDays(NUMBER_OF_DUE_DAYS))
+                .createdAt(LocalDateTime.now())
                 .build();
         return rentalRepository.save(rental);
     }
@@ -106,13 +116,13 @@ public class BookRentalService {
 
     public List<Rental> findRentalsByUserId(Long userId) {
         return rentalRepository.findAll().stream()
-                .filter(rental -> rental.getUser().getId().equals(userId))
+                .filter(rental -> rental.getUserId().equals(userId))
                 .toList();
     }
 
     public List<Rental> findRentalsByBookId(Long bookId) {
         return rentalRepository.findAll().stream()
-                .filter(rental -> rental.getBook().getId().equals(bookId))
+                .filter(rental -> rental.getBookId().equals(bookId))
                 .toList();
     }
 }
