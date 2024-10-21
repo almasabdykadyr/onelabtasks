@@ -132,6 +132,9 @@ Rental {
 4. **Access the API**:  
    The API will be available at [http://localhost:8080](http://localhost:8080).
 
+5. **You can use Postman collection**:
+       Use this [file](Book%20Rent%20Service%20Collection.postman_collection.json)
+
 ---
 
 ## Future Improvements
