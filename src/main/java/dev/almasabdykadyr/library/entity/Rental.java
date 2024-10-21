@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-@Table("rentals")
+@Table("RENTALS")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,9 +22,9 @@ public class Rental {
     @NotNull
     private Long id;
     @NotNull
-    private Book book;
+    private Long bookId;
     @NotNull
-    private User user;
+    private Long userId;
     @NotNull
     private RentStatus status;
     @NotNull
