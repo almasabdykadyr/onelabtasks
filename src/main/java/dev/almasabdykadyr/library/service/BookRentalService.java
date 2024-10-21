@@ -1,12 +1,11 @@
 package dev.almasabdykadyr.library.service;
 
+import dev.almasabdykadyr.library.dto.AuthorRequest;
 import dev.almasabdykadyr.library.dto.BookRequest;
 import dev.almasabdykadyr.library.dto.NewRentalRequest;
 import dev.almasabdykadyr.library.dto.UserRequest;
-import dev.almasabdykadyr.library.entity.Book;
-import dev.almasabdykadyr.library.entity.RentStatus;
-import dev.almasabdykadyr.library.entity.Rental;
-import dev.almasabdykadyr.library.entity.User;
+import dev.almasabdykadyr.library.entity.*;
+import dev.almasabdykadyr.library.repo.AuthorRepository;
 import dev.almasabdykadyr.library.repo.BookRepository;
 import dev.almasabdykadyr.library.repo.RentalRepository;
 import dev.almasabdykadyr.library.repo.UserRepository;
@@ -27,6 +26,7 @@ public class BookRentalService {
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
     private final RentalRepository rentalRepository;
+    private final AuthorRepository authorRepository;
 
     public User addUser(UserRequest request) {
         User user = User.builder()
@@ -56,6 +56,20 @@ public class BookRentalService {
 
     public List<Book> listAllBooks() {
         return bookRepository.findAll();
+    }
+
+    public Author addAuthor(AuthorRequest request) {
+
+        Author author = Author.builder()
+                .firstName(request.firstName())
+                .lastName(request.lastName())
+                .build();
+
+        return authorRepository.save(author);
+    }
+
+    public List<Author> listAllAuthors() {
+        return authorRepository.findAll();
     }
 
     // Rent a book to a user

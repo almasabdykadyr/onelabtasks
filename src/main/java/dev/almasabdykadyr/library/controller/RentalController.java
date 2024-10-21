@@ -1,8 +1,10 @@
 package dev.almasabdykadyr.library.controller;
 
+import dev.almasabdykadyr.library.dto.AuthorRequest;
 import dev.almasabdykadyr.library.dto.BookRequest;
 import dev.almasabdykadyr.library.dto.NewRentalRequest;
 import dev.almasabdykadyr.library.dto.UserRequest;
+import dev.almasabdykadyr.library.entity.Author;
 import dev.almasabdykadyr.library.entity.Book;
 import dev.almasabdykadyr.library.entity.Rental;
 import dev.almasabdykadyr.library.entity.User;
@@ -30,6 +32,16 @@ public class RentalController {
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(service.listAllUsers());
+    }
+
+    @PostMapping("/authors")
+    public ResponseEntity<Author> addAuthor(@RequestBody @Valid AuthorRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.addAuthor(request));
+    }
+
+    @GetMapping("/authors")
+    public ResponseEntity<List<Author>> getAllAuthors() {
+        return ResponseEntity.ok(service.listAllAuthors());
     }
 
     @PostMapping("/books")
