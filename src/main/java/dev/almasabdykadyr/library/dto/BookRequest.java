@@ -8,6 +8,6 @@ import java.time.LocalDate;
 /**
  * DTO for {@link dev.almasabdykadyr.library.entity.Book}
  */
-public record BookRequest(@NotBlank String isbn, @NotBlank String title, @NotBlank String description,
+public record BookRequest(@NotBlank String isbn, @NotBlank String title, @NotBlank String description, @NotNull Long authorId,
                           @NotNull LocalDate publishedAt) {
 }
