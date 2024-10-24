@@ -1,31 +1,29 @@
 package dev.almasabdykadyr.library.entity;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
-@Table("RENTALS")
-@Builder
+@Entity
+@Table(name = "rentals")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Rental {
 
     @Id
-    @NotNull
+    @GeneratedValue
     private Long id;
     @NotNull
     private Long bookId;
     @NotNull
     private Long userId;
-    @NotNull
+    @Enumerated(EnumType.STRING)
     private RentStatus status;
     @NotNull
     private LocalDate dueDate;
