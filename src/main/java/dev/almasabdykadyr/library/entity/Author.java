@@ -1,33 +1,30 @@
 package dev.almasabdykadyr.library.entity;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Entity
+@Table(name = "authors")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table("AUTHORS")
 public class Author {
 
     @Id
+    @GeneratedValue
     private Long id;
     @NotBlank
-    @Column("FIRSTNAME")
+    @Column(name = "firstname")
     private String firstName;
     @NotBlank
-    @Column("LASTNAME")
+    @Column(name = "lastname")
     private String lastName;
     @NotNull
-    @Column("CREATED_AT")
     private LocalDateTime createdAt;
 }
