@@ -118,6 +118,10 @@ Rental {
    https://github.com/almasabdykadyr/onelabtasks/tree/task1.git
    cd onelabtasks
    ```
+2. **Run docker compose**:
+    ```bash
+    docker-compose up -d
+    ```
 
 2. **Build the project**:
    ```bash
@@ -136,9 +140,3 @@ Rental {
        Use this [file](Book%20Rent%20Service%20Collection.postman_collection.json)
 
 ---
-
-## Future Improvements
-- Implement **authentication and authorization** (e.g., JWT).
-- Add **pagination** for listing rentals.
-- Support **overdue book alerts**.
-- Implement **unit and integration tests**.
