@@ -13,7 +13,9 @@ import dev.almasabdykadyr.library.repo.RentalRepository;
 import dev.almasabdykadyr.library.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,6 +32,7 @@ public class BookRentalService {
     private final RentalRepository rentalRepository;
     private final AuthorRepository authorRepository;
 
+    @Transactional
     public User addUser(UserRequest request) {
         User user = User.builder()
                 .email(request.email())
@@ -41,11 +44,12 @@ public class BookRentalService {
         return userRepository.save(user);
     }
 
+    @Transactional
     public List<User> listAllUsers() {
-
         return userRepository.findAll();
     }
 
+    @Transactional
     public Book addBook(BookRequest request) {
         Book book = Book.builder()
                 .isbn(request.isbn())
@@ -58,10 +62,12 @@ public class BookRentalService {
         return bookRepository.save(book);
     }
 
+    @Transactional
     public List<Book> listAllBooks() {
         return bookRepository.findAll();
     }
 
+    @Transactional
     public Author addAuthor(AuthorRequest request) {
 
         Author author = Author.builder()
@@ -73,11 +79,13 @@ public class BookRentalService {
         return authorRepository.save(author);
     }
 
+    @Transactional
     public List<Author> listAllAuthors() {
         return authorRepository.findAll();
     }
 
     // Rent a book to a user
+    @Transactional(rollbackFor = SQLException.class)
     public Rental rent(NewRentalRequest request) {
         Optional<User> userOpt = userRepository.findById(request.userId());
         Optional<Book> bookOpt = bookRepository.findById(request.bookId());
@@ -100,6 +108,7 @@ public class BookRentalService {
         return rentalRepository.save(rental);
     }
 
+    @Transactional
     public Rental returnRent(Long rentId) {
         Optional<Rental> optRental = rentalRepository.findById(rentId);
         if (optRental.isEmpty()) throw new IllegalArgumentException("Rental not found");
@@ -110,16 +119,19 @@ public class BookRentalService {
         return rental;
     }
 
+    @Transactional
     public List<Rental> listAllRentals() {
         return rentalRepository.findAll();
     }
 
+    @Transactional
     public List<Rental> findRentalsByUserId(Long userId) {
         return rentalRepository.findAll().stream()
                 .filter(rental -> rental.getUserId().equals(userId))
                 .toList();
     }
 
+    @Transactional
     public List<Rental> findRentalsByBookId(Long bookId) {
         return rentalRepository.findAll().stream()
                 .filter(rental -> rental.getBookId().equals(bookId))
