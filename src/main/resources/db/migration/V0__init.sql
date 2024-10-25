@@ -5,7 +5,7 @@ CREATE SEQUENCE users_seq START WITH 1 INCREMENT BY 50;
 
 CREATE TABLE authors
 (
-    id         BIGINT PRIMARY KEY,
+    id         BIGSERIAL PRIMARY KEY,
     firstname  VARCHAR(255) NOT NULL,
     lastname   VARCHAR(255) NOT NULL,
     created_at TIMESTAMP    NOT NULL
@@ -13,7 +13,7 @@ CREATE TABLE authors
 
 CREATE TABLE books
 (
-    id           BIGINT PRIMARY KEY,
+    id           BIGSERIAL PRIMARY KEY,
     isbn         VARCHAR(17),
     title        VARCHAR(255),
     description  VARCHAR(500),
@@ -35,7 +35,7 @@ CREATE TABLE users
 
 CREATE TABLE rentals
 (
-    id         BIGINT PRIMARY KEY,
+    id         BIGSERIAL PRIMARY KEY,
     book_id    BIGINT      NOT NULL,
     user_id    BIGINT      NOT NULL,
     status     VARCHAR(50) NOT NULL,

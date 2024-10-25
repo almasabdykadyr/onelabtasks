@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class Book {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
     private String isbn;
