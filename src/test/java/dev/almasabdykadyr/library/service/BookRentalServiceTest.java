@@ -21,6 +21,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -118,5 +119,20 @@ class BookRentalServiceTest {
         assertThrows(BookNotFoundException.class, () -> service.rent(request));
         verify(userRepository, times(1)).findById(1L);
         verify(bookRepository, times(1)).findById(99L);
+    }
+
+    @Test
+    void testFindRentalsByUserId() {
+        Rental rental1 = new Rental();
+        rental1.setUserId(1L);
+        Rental rental2 = new Rental();
+        rental2.setUserId(1L);
+
+        when(rentalRepository.findAll()).thenReturn(List.of(rental1, rental2));
+
+        List<Rental> rentals = service.findRentalsByUserId(1L);
+
+        assertEquals(2, rentals.size());
+        verify(rentalRepository, times(1)).findAll();
     }
 }
