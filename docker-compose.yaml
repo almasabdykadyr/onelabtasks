@@ -17,7 +17,7 @@ services:
       start_period: 10s
       retries: 5
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.7.1
+    image: zookeeper:3.9.2
     restart: "no"
     ports:
       - "2181:2181"
@@ -27,6 +27,7 @@ services:
       timeout: 5s
       start_period: 10s
       retries: 5
+
   kafka:
     image: confluentinc/cp-kafka:7.7.1
     restart: "no"
@@ -50,6 +51,8 @@ services:
       retries: 5
     depends_on:
       - zookeeper
+    labels:
+      amplicode.image: confluent/kafka
 volumes:
   postgres_data:
   kafka_data:
