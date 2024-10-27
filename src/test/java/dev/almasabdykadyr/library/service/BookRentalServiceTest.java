@@ -1,12 +1,11 @@
 package dev.almasabdykadyr.library.service;
 
 
+import dev.almasabdykadyr.library.dto.AuthorRequest;
 import dev.almasabdykadyr.library.dto.BookRequest;
 import dev.almasabdykadyr.library.dto.NewRentalRequest;
 import dev.almasabdykadyr.library.dto.UserRequest;
-import dev.almasabdykadyr.library.entity.Book;
-import dev.almasabdykadyr.library.entity.Rental;
-import dev.almasabdykadyr.library.entity.User;
+import dev.almasabdykadyr.library.entity.*;
 import dev.almasabdykadyr.library.exception.BookNotFoundException;
 import dev.almasabdykadyr.library.exception.UserNotFoundException;
 import dev.almasabdykadyr.library.repo.AuthorRepository;
@@ -66,6 +65,44 @@ class BookRentalServiceTest {
     }
 
     @Test
+    void testListAllUsers() {
+        when(userRepository.findAll()).thenReturn(List.of(new User(), new User()));
+
+        List<User> users = service.listAllUsers();
+
+        assertEquals(2, users.size());
+        verify(userRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testAddAuthor() {
+
+        AuthorRequest request = new AuthorRequest("John", "Doe");
+
+        Author author = Author.builder().firstName("John").lastName("Doe").build();
+
+        when(authorRepository.save(any(Author.class))).thenReturn(author);
+
+        Author actual = service.addAuthor(request);
+
+        assertNotNull(actual);
+        assertEquals(request.firstName(), actual.getFirstName());
+        assertEquals(request.lastName(), actual.getLastName());
+
+        verify(authorRepository, times(1)).save(any(Author.class));
+    }
+
+    @Test
+    void testListAllAuthors() {
+        when(authorRepository.findAll()).thenReturn(List.of(new Author(), new Author()));
+
+        List<Author> authors = service.listAllAuthors();
+
+        assertEquals(2, authors.size());
+        verify(authorRepository, times(1)).findAll();
+    }
+
+    @Test
     void testAddBook() {
         BookRequest request = new BookRequest("123456789", "Test Book", "Description", 1L, LocalDate.now());
         Book book = Book.builder().id(1L).isbn(request.isbn()).title(request.title()).description(request.description()).publishedAt(request.publishedAt()).authorId(request.authorId()).createdAt(LocalDateTime.now()).build();
@@ -77,6 +114,16 @@ class BookRentalServiceTest {
         assertNotNull(savedBook);
         assertEquals("Test Book", savedBook.getTitle());
         verify(bookRepository, times(1)).save(any(Book.class));
+    }
+
+    @Test
+    void testListAllBooks() {
+        when(bookRepository.findAll()).thenReturn(List.of(new Book(), new Book()));
+
+        List<Book> books = service.listAllBooks();
+
+        assertEquals(2, books.size());
+        verify(bookRepository, times(1)).findAll();
     }
 
     @Test
@@ -122,6 +169,46 @@ class BookRentalServiceTest {
     }
 
     @Test
+    void returnRent_ShouldUpdateStatusToReturned_WhenRentalExists() {
+        // Arrange
+        Long rentId = 1L;
+        Rental rental = new Rental();
+        rental.setStatus(RentStatus.RENTED);
+
+        when(rentalRepository.findById(rentId)).thenReturn(Optional.of(rental));
+
+        // Act
+        Rental returnedRental = service.returnRent(rentId);
+
+        // Assert
+        assertEquals(RentStatus.RETURNED, returnedRental.getStatus());
+        verify(rentalRepository).findById(rentId); // Ensure repository was called
+    }
+
+    @Test
+    void returnRent_ShouldThrowException_WhenRentalNotFound() {
+        // Arrange
+        Long rentId = 2L;
+        when(rentalRepository.findById(rentId)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.returnRent(rentId),
+                "Rental not found");
+        verify(rentalRepository).findById(rentId); // Ensure repository was called
+    }
+
+    @Test
+    void testListAllRentals() {
+        when(rentalRepository.findAll()).thenReturn(List.of(new Rental(), new Rental()));
+
+        List<Rental> rentals = service.listAllRentals();
+
+        assertEquals(2, rentals.size());
+        verify(rentalRepository, times(1)).findAll();
+    }
+
+    @Test
     void testFindRentalsByUserId() {
         Rental rental1 = new Rental();
         rental1.setUserId(1L);
@@ -131,6 +218,21 @@ class BookRentalServiceTest {
         when(rentalRepository.findAll()).thenReturn(List.of(rental1, rental2));
 
         List<Rental> rentals = service.findRentalsByUserId(1L);
+
+        assertEquals(2, rentals.size());
+        verify(rentalRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testFindRentalsByBookId() {
+        Rental rental1 = new Rental();
+        rental1.setBookId(1L);
+        Rental rental2 = new Rental();
+        rental2.setBookId(1L);
+
+        when(rentalRepository.findAll()).thenReturn(List.of(rental1, rental2));
+
+        List<Rental> rentals = service.findRentalsByBookId(1L);
 
         assertEquals(2, rentals.size());
         verify(rentalRepository, times(1)).findAll();
