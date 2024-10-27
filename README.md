@@ -139,4 +139,6 @@ Rental {
 5. **You can use Postman collection**:
        Use this [file](Book%20Rent%20Service%20Collection.postman_collection.json)
 
+6. **Swagger API docks available at**:
+       [http://localhost:8080/swagger-ui/index.html#/](http://localhost:8080/swagger-ui/index.html#/)
 ---
