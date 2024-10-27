@@ -11,7 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAspect {
 
-    @Pointcut("execution(* dev.almasabdykadyr.library.service.BookRentalService.*(..))")
+    @Pointcut(
+            "execution(* dev.almasabdykadyr.library.service.BookRentalService.*(..)) || " +
+            "execution(* dev.almasabdykadyr.library.notification.NotificationService.*(..))"
+    )
     public void serviceMethods() {}
 
     @Before("serviceMethods()")
