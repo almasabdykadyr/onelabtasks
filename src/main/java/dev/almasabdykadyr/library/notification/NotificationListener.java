@@ -12,6 +12,6 @@ public class NotificationListener {
         String email = eventParts[0];
         String message =  eventParts[1];
 
-        System.out.printf("sending abstract message via email %s with message %s%n", email, message);
+        System.out.printf("receiving abstract message via email %s with message %s%n", email, message);
     }
 }

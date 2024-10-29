@@ -5,13 +5,13 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NotificationService {
+public class NotificationProducer {
 
     @Value("${kafka.notification.topic}")
     private String notificationKafkaTopic;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public NotificationService(KafkaTemplate<String, String> kafkaTemplate) {
+    public NotificationProducer(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 

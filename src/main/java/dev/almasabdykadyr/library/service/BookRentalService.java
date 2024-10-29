@@ -7,7 +7,6 @@ import dev.almasabdykadyr.library.dto.UserRequest;
 import dev.almasabdykadyr.library.entity.*;
 import dev.almasabdykadyr.library.exception.BookNotFoundException;
 import dev.almasabdykadyr.library.exception.UserNotFoundException;
-import dev.almasabdykadyr.library.notification.NotificationService;
 import dev.almasabdykadyr.library.repo.AuthorRepository;
 import dev.almasabdykadyr.library.repo.BookRepository;
 import dev.almasabdykadyr.library.repo.RentalRepository;
@@ -109,7 +108,8 @@ public class BookRentalService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        notificationService.sendNotification(userOpt.get().getEmail(), "Rent created: %s".formatted(rental));
+        notificationService.sendRentCreatedNotification(userOpt.get().getId());
+
         return rentalRepository.save(rental);
     }
 
@@ -126,7 +126,7 @@ public class BookRentalService {
             throw new UserNotFoundException("User not found");
         }
 
-        notificationService.sendNotification(userOpt.get().getEmail(), "Rent returned: %s".formatted(rental));
+        notificationService.sendRentReturnedNotification(userOpt.get().getId());
 
         return rental;
     }

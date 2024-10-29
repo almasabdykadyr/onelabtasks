@@ -13,7 +13,7 @@ public class LoggingAspect {
 
     @Pointcut(
             "execution(* dev.almasabdykadyr.library.service.BookRentalService.*(..)) || " +
-            "execution(* dev.almasabdykadyr.library.notification.NotificationService.*(..))"
+            "execution(* dev.almasabdykadyr.library.notification.NotificationProducer.*(..))"
     )
     public void serviceMethods() {}
 
