@@ -108,8 +108,6 @@ public class BookRentalService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        notificationService.sendRentCreatedNotification(userOpt.get().getId());
-
         return rentalRepository.save(rental);
     }
 
@@ -120,13 +118,6 @@ public class BookRentalService {
 
         Rental rental = optRental.get();
         rental.setStatus(RentStatus.RETURNED);
-
-        Optional<User> userOpt = userRepository.findById(rental.getUserId());
-        if (userOpt.isEmpty()) {
-            throw new UserNotFoundException("User not found");
-        }
-
-        notificationService.sendRentReturnedNotification(userOpt.get().getId());
 
         return rental;
     }
