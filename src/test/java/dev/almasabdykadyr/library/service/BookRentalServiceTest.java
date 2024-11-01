@@ -37,6 +37,9 @@ class BookRentalServiceTest {
     private RentalRepository rentalRepository;
     @Mock
     private AuthorRepository authorRepository;
+    @Mock
+    private NotificationService notificationService;
+
 
     @InjectMocks
     private BookRentalService service;
@@ -170,17 +173,14 @@ class BookRentalServiceTest {
 
     @Test
     void returnRent_ShouldUpdateStatusToReturned_WhenRentalExists() {
-        // Arrange
         Long rentId = 1L;
         Rental rental = new Rental();
         rental.setStatus(RentStatus.RENTED);
 
         when(rentalRepository.findById(rentId)).thenReturn(Optional.of(rental));
 
-        // Act
         Rental returnedRental = service.returnRent(rentId);
 
-        // Assert
         assertEquals(RentStatus.RETURNED, returnedRental.getStatus());
         verify(rentalRepository).findById(rentId); // Ensure repository was called
     }
