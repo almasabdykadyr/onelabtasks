@@ -3,6 +3,7 @@ package dev.almasabdykadyr.library.service;
 import dev.almasabdykadyr.library.dto.AuthRequest;
 import dev.almasabdykadyr.library.dto.AuthResponse;
 import dev.almasabdykadyr.library.dto.AuthorRequest;
+import dev.almasabdykadyr.library.dto.RegisterRequest;
 import dev.almasabdykadyr.library.entity.Roles;
 import dev.almasabdykadyr.library.entity.User;
 import dev.almasabdykadyr.library.repo.UserRepository;
@@ -13,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Service
@@ -24,11 +26,14 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthResponse register(AuthRequest request) {
+    public AuthResponse register(RegisterRequest request) {
         User user = User.builder()
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
+                .firstName(request.firstname())
+                .lastName(request.lastname())
                 .roles(Set.of(Roles.USER))
+                .createdAt(LocalDateTime.now())
                 .build();
 
         repository.save(user);

@@ -18,8 +18,9 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
     private static final String[] AUTH_WHITE_LIST = {
+            "/v3/api-docs/**",
             "/swagger-ui/**",
-            "/v2/api-docs",
+            "/v2/api-docs/**",
             "/swagger-resources/**",
             "/auth/**"
     };
@@ -41,6 +42,4 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-
 }
