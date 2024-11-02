@@ -2,6 +2,7 @@ package dev.almasabdykadyr.library.controller;
 
 import dev.almasabdykadyr.library.dto.AuthRequest;
 import dev.almasabdykadyr.library.dto.AuthResponse;
+import dev.almasabdykadyr.library.dto.RegisterRequest;
 import dev.almasabdykadyr.library.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(
-            @RequestBody AuthRequest request
+            @RequestBody RegisterRequest request
     ) {
         return ResponseEntity.ok(authService.register(request));
     }
