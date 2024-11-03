@@ -2,9 +2,7 @@ package dev.almasabdykadyr.library.service;
 
 
 import dev.almasabdykadyr.library.dto.AuthorRequest;
-import dev.almasabdykadyr.library.dto.BookRequest;
 import dev.almasabdykadyr.library.dto.NewRentalRequest;
-import dev.almasabdykadyr.library.dto.UserRequest;
 import dev.almasabdykadyr.library.entity.*;
 import dev.almasabdykadyr.library.exception.BookNotFoundException;
 import dev.almasabdykadyr.library.exception.UserNotFoundException;
@@ -18,8 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,34 +46,6 @@ class BookRentalServiceTest {
     }
 
     @Test
-    void testAddUser() {
-
-        UserRequest request = new UserRequest("testuser@example.com", "password", "John", "Doe");
-
-        User user = User.builder().id(52L).email(request.email()).password(request.password()).firstName(request.firstName()).lastName(request.lastName()).createdAt(LocalDateTime.now()).build();
-
-        when(userRepository.save(any(User.class))).thenReturn(user);
-
-        User actual = service.addUser(request);
-
-        assertNotNull(actual);
-        assertEquals(request.firstName(), actual.getFirstName());
-        assertEquals(request.lastName(), actual.getLastName());
-
-        verify(userRepository, times(1)).save(any(User.class));
-    }
-
-    @Test
-    void testListAllUsers() {
-        when(userRepository.findAll()).thenReturn(List.of(new User(), new User()));
-
-        List<User> users = service.listAllUsers();
-
-        assertEquals(2, users.size());
-        verify(userRepository, times(1)).findAll();
-    }
-
-    @Test
     void testAddAuthor() {
 
         AuthorRequest request = new AuthorRequest("John", "Doe");
@@ -105,29 +73,6 @@ class BookRentalServiceTest {
         verify(authorRepository, times(1)).findAll();
     }
 
-    @Test
-    void testAddBook() {
-        BookRequest request = new BookRequest("123456789", "Test Book", "Description", 1L, LocalDate.now());
-        Book book = Book.builder().id(1L).isbn(request.isbn()).title(request.title()).description(request.description()).publishedAt(request.publishedAt()).authorId(request.authorId()).createdAt(LocalDateTime.now()).build();
-
-        when(bookRepository.save(any(Book.class))).thenReturn(book);
-
-        Book savedBook = service.addBook(request);
-
-        assertNotNull(savedBook);
-        assertEquals("Test Book", savedBook.getTitle());
-        verify(bookRepository, times(1)).save(any(Book.class));
-    }
-
-    @Test
-    void testListAllBooks() {
-        when(bookRepository.findAll()).thenReturn(List.of(new Book(), new Book()));
-
-        List<Book> books = service.listAllBooks();
-
-        assertEquals(2, books.size());
-        verify(bookRepository, times(1)).findAll();
-    }
 
     @Test
     void testRentBook_Success() {

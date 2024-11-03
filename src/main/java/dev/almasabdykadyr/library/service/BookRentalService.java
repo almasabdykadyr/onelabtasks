@@ -1,9 +1,7 @@
 package dev.almasabdykadyr.library.service;
 
 import dev.almasabdykadyr.library.dto.AuthorRequest;
-import dev.almasabdykadyr.library.dto.BookRequest;
 import dev.almasabdykadyr.library.dto.NewRentalRequest;
-import dev.almasabdykadyr.library.dto.UserRequest;
 import dev.almasabdykadyr.library.entity.*;
 import dev.almasabdykadyr.library.exception.BookNotFoundException;
 import dev.almasabdykadyr.library.exception.UserNotFoundException;
@@ -35,44 +33,9 @@ public class BookRentalService {
     private final NotificationService notificationService;
 
     @Transactional
-    public User addUser(UserRequest request) {
-        User user = User.builder()
-                .email(request.email())
-                .password(request.password())
-                .firstName(request.firstName())
-                .lastName(request.lastName())
-                .createdAt(LocalDateTime.now())
-                .build();
-        return userRepository.save(user);
-    }
-
-    @Transactional
-    public List<User> listAllUsers() {
-        return userRepository.findAll();
-    }
-
-    @Transactional
-    public Book addBook(BookRequest request) {
-        Book book = Book.builder()
-                .isbn(request.isbn())
-                .title(request.title())
-                .description(request.description())
-                .publishedAt(request.publishedAt())
-                .authorId(request.authorId())
-                .createdAt(LocalDateTime.now())
-                .build();
-        return bookRepository.save(book);
-    }
-
-    @Transactional
-    public List<Book> listAllBooks() {
-        return bookRepository.findAll();
-    }
-
-    @Transactional
     public Author addAuthor(AuthorRequest request) {
 
-        Author author = Author.builder()
+        var author = Author.builder()
                 .firstName(request.firstName())
                 .lastName(request.lastName())
                 .createdAt(LocalDateTime.now())
