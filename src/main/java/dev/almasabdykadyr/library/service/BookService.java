@@ -2,6 +2,7 @@ package dev.almasabdykadyr.library.service;
 
 import dev.almasabdykadyr.library.dto.BookRequest;
 import dev.almasabdykadyr.library.entity.Book;
+import dev.almasabdykadyr.library.exception.BookNotFoundException;
 import dev.almasabdykadyr.library.repo.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,4 +35,9 @@ public class BookService {
         return repository.findAll();
     }
 
+    @Transactional
+    public Book getBookById(Long id) {
+
+        return repository.findById(id).orElseThrow(() -> new BookNotFoundException("book not found with given id"));
+    }
 }

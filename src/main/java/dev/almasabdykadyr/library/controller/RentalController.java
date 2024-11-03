@@ -1,8 +1,6 @@
 package dev.almasabdykadyr.library.controller;
 
-import dev.almasabdykadyr.library.dto.AuthorRequest;
 import dev.almasabdykadyr.library.dto.NewRentalRequest;
-import dev.almasabdykadyr.library.entity.Author;
 import dev.almasabdykadyr.library.entity.Rental;
 import dev.almasabdykadyr.library.service.BookRentalService;
 import lombok.RequiredArgsConstructor;
@@ -20,15 +18,6 @@ public class RentalController implements RentalApi {
 
     private final BookRentalService service;
 
-    @Override
-    public ResponseEntity<Author> addAuthor(AuthorRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.addAuthor(request));
-    }
-
-    @Override
-    public ResponseEntity<List<Author>> getAllAuthors() {
-        return ResponseEntity.ok(service.listAllAuthors());
-    }
 
 
     @Override
