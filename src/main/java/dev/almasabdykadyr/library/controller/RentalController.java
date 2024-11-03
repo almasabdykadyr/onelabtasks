@@ -1,13 +1,9 @@
 package dev.almasabdykadyr.library.controller;
 
 import dev.almasabdykadyr.library.dto.AuthorRequest;
-import dev.almasabdykadyr.library.dto.BookRequest;
 import dev.almasabdykadyr.library.dto.NewRentalRequest;
-import dev.almasabdykadyr.library.dto.UserRequest;
 import dev.almasabdykadyr.library.entity.Author;
-import dev.almasabdykadyr.library.entity.Book;
 import dev.almasabdykadyr.library.entity.Rental;
-import dev.almasabdykadyr.library.entity.User;
 import dev.almasabdykadyr.library.service.BookRentalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,16 +21,6 @@ public class RentalController implements RentalApi {
     private final BookRentalService service;
 
     @Override
-    public ResponseEntity<User> addUser(UserRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.addUser(request));
-    }
-
-    @Override
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(service.listAllUsers());
-    }
-
-    @Override
     public ResponseEntity<Author> addAuthor(AuthorRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.addAuthor(request));
     }
@@ -44,15 +30,6 @@ public class RentalController implements RentalApi {
         return ResponseEntity.ok(service.listAllAuthors());
     }
 
-    @Override
-    public ResponseEntity<Book> addBook(BookRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.addBook(request));
-    }
-
-    @Override
-    public ResponseEntity<List<Book>> getAllBooks() {
-        return ResponseEntity.ok(service.listAllBooks());
-    }
 
     @Override
     public ResponseEntity<Rental> rent(NewRentalRequest request) {
