@@ -1,15 +1,11 @@
 package dev.almasabdykadyr.library.service;
 
 
-import dev.almasabdykadyr.library.dto.AuthorRequest;
 import dev.almasabdykadyr.library.dto.NewRentalRequest;
 import dev.almasabdykadyr.library.entity.*;
 import dev.almasabdykadyr.library.exception.BookNotFoundException;
 import dev.almasabdykadyr.library.exception.UserNotFoundException;
-import dev.almasabdykadyr.library.repo.AuthorRepository;
-import dev.almasabdykadyr.library.repo.BookRepository;
 import dev.almasabdykadyr.library.repo.RentalRepository;
-import dev.almasabdykadyr.library.repo.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,16 +22,11 @@ import static org.mockito.Mockito.*;
 class BookRentalServiceTest {
 
     @Mock
-    private UserRepository userRepository;
+    private UserService userService;
     @Mock
-    private BookRepository bookRepository;
+    private BookService bookService;
     @Mock
     private RentalRepository rentalRepository;
-    @Mock
-    private AuthorRepository authorRepository;
-    @Mock
-    private NotificationService notificationService;
-
 
     @InjectMocks
     private BookRentalService service;
@@ -46,49 +37,20 @@ class BookRentalServiceTest {
     }
 
     @Test
-    void testAddAuthor() {
-
-        AuthorRequest request = new AuthorRequest("John", "Doe");
-
-        Author author = Author.builder().firstName("John").lastName("Doe").build();
-
-        when(authorRepository.save(any(Author.class))).thenReturn(author);
-
-        Author actual = service.addAuthor(request);
-
-        assertNotNull(actual);
-        assertEquals(request.firstName(), actual.getFirstName());
-        assertEquals(request.lastName(), actual.getLastName());
-
-        verify(authorRepository, times(1)).save(any(Author.class));
-    }
-
-    @Test
-    void testListAllAuthors() {
-        when(authorRepository.findAll()).thenReturn(List.of(new Author(), new Author()));
-
-        List<Author> authors = service.listAllAuthors();
-
-        assertEquals(2, authors.size());
-        verify(authorRepository, times(1)).findAll();
-    }
-
-
-    @Test
     void testRentBook_Success() {
         NewRentalRequest request = new NewRentalRequest(1L, 1L);
         User user = new User();
         Book book = new Book();
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
+        when(userService.getUserById(1L)).thenReturn(user);
+        when(bookService.getBookById(1L)).thenReturn(book);
         when(rentalRepository.save(any(Rental.class))).thenReturn(new Rental());
 
         Rental rental = service.rent(request);
 
         assertNotNull(rental);
-        verify(userRepository, times(1)).findById(1L);
-        verify(bookRepository, times(1)).findById(1L);
+        verify(userService, times(1)).getUserById(1L);
+        verify(bookService, times(1)).getBookById(1L);
         verify(rentalRepository, times(1)).save(any(Rental.class));
     }
 
@@ -96,24 +58,24 @@ class BookRentalServiceTest {
     void testRentBook_UserNotFound() {
         NewRentalRequest request = new NewRentalRequest(99L, 1L);
 
-        when(userRepository.findById(99L)).thenReturn(Optional.empty());
-        when(bookRepository.findById(99L)).thenReturn(Optional.of(new Book()));
+        when(userService.getUserById(99L)).thenReturn(null);
+        when(bookService.getBookById(99L)).thenReturn(new Book());
 
 
         assertThrows(UserNotFoundException.class, () -> service.rent(request));
-        verify(userRepository, times(1)).findById(99L);
-        verify(bookRepository, times(1)).findById(1L);
+        verify(userService, times(1)).getUserById(99L);
+        verify(bookService, times(1)).getBookById(1L);
     }
 
     @Test
     void testRentBook_BookNotFound() {
         NewRentalRequest request = new NewRentalRequest(1L, 99L);
-        when(userRepository.findById(1L)).thenReturn(Optional.of(new User()));
-        when(bookRepository.findById(99L)).thenReturn(Optional.empty());
+        when(userService.getUserById(1L)).thenReturn(new User());
+        when(bookService.getBookById(99L)).thenReturn(null);
 
         assertThrows(BookNotFoundException.class, () -> service.rent(request));
-        verify(userRepository, times(1)).findById(1L);
-        verify(bookRepository, times(1)).findById(99L);
+        verify(userService, times(1)).getUserById(1L);
+        verify(bookService, times(1)).getBookById(99L);
     }
 
     @Test

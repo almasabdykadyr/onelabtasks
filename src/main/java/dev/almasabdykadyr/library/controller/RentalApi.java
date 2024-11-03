@@ -1,8 +1,6 @@
 package dev.almasabdykadyr.library.controller;
 
-import dev.almasabdykadyr.library.dto.AuthorRequest;
 import dev.almasabdykadyr.library.dto.NewRentalRequest;
-import dev.almasabdykadyr.library.entity.Author;
 import dev.almasabdykadyr.library.entity.Rental;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -19,30 +17,6 @@ import java.util.List;
 @RequestMapping("api/v1")
 @Tag(name = "Rental API", description = "API for Rental Service")
 public interface RentalApi {
-
-    @Operation(
-            summary = "Add a new author",
-            description = "Creates a new author with the provided details.",
-            responses = {
-                    @ApiResponse(responseCode = "201", description = "Author successfully created",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Author.class))),
-                    @ApiResponse(responseCode = "400", description = "Invalid input")
-            }
-    )
-    @PostMapping("/authors")
-    ResponseEntity<Author> addAuthor(@RequestBody @Valid AuthorRequest request);
-
-    @Operation(
-            summary = "Get all authors",
-            description = "Retrieves a list of all authors.",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Successful operation",
-                            content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Author.class))))
-            }
-    )
-    @GetMapping("/authors")
-    ResponseEntity<List<Author>> getAllAuthors();
-
 
     @Operation(
             summary = "Rent a book",
