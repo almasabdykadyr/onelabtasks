@@ -2,6 +2,7 @@ package dev.almasabdykadyr.library.config;
 
 import dev.almasabdykadyr.library.repo.UserRepository;
 import dev.almasabdykadyr.library.security.JwtProperties;
+import dev.almasabdykadyr.library.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -25,12 +26,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @RequiredArgsConstructor
 public class AppConfig {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return userService::getUserByEmail;
     }
 
     @Bean
