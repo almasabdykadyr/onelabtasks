@@ -1,7 +1,10 @@
 package dev.almasabdykadyr.library.service;
 
 import dev.almasabdykadyr.library.dto.NewRentalRequest;
-import dev.almasabdykadyr.library.entity.*;
+import dev.almasabdykadyr.library.entity.Book;
+import dev.almasabdykadyr.library.entity.RentStatus;
+import dev.almasabdykadyr.library.entity.Rental;
+import dev.almasabdykadyr.library.entity.User;
 import dev.almasabdykadyr.library.repo.RentalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
