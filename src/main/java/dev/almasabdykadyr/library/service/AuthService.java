@@ -4,9 +4,7 @@ import dev.almasabdykadyr.library.dto.AuthRequest;
 import dev.almasabdykadyr.library.dto.AuthResponse;
 import dev.almasabdykadyr.library.dto.RegisterRequest;
 import dev.almasabdykadyr.library.dto.UserRequest;
-import dev.almasabdykadyr.library.entity.Roles;
 import dev.almasabdykadyr.library.entity.User;
-import dev.almasabdykadyr.library.repo.UserRepository;
 import dev.almasabdykadyr.library.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,8 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
