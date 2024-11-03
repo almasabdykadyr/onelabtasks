@@ -2,7 +2,6 @@ package dev.almasabdykadyr.library.service;
 
 import dev.almasabdykadyr.library.dto.AuthRequest;
 import dev.almasabdykadyr.library.dto.AuthResponse;
-import dev.almasabdykadyr.library.dto.AuthorRequest;
 import dev.almasabdykadyr.library.dto.RegisterRequest;
 import dev.almasabdykadyr.library.entity.Roles;
 import dev.almasabdykadyr.library.entity.User;
@@ -39,7 +38,7 @@ public class AuthService {
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthResponse.builder()
-                .secret(jwtToken)
+                .token(jwtToken)
                 .build();
     }
 
@@ -54,7 +53,7 @@ public class AuthService {
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthResponse.builder()
-                .secret(jwtToken)
+                .token(jwtToken)
                 .build();
     }
 }
