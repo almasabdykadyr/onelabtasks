@@ -3,6 +3,7 @@ package dev.almasabdykadyr.library.service;
 import dev.almasabdykadyr.library.dto.AuthRequest;
 import dev.almasabdykadyr.library.dto.AuthResponse;
 import dev.almasabdykadyr.library.dto.RegisterRequest;
+import dev.almasabdykadyr.library.dto.UserRequest;
 import dev.almasabdykadyr.library.entity.Roles;
 import dev.almasabdykadyr.library.entity.User;
 import dev.almasabdykadyr.library.repo.UserRepository;
@@ -20,22 +21,22 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final UserRepository repository;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     public AuthResponse register(RegisterRequest request) {
-        User user = User.builder()
+
+        var userRequest = UserRequest.builder()
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
                 .firstName(request.firstname())
                 .lastName(request.lastname())
-                .roles(Set.of(Roles.USER))
-                .createdAt(LocalDateTime.now())
                 .build();
 
-        repository.save(user);
+        User user = userService.addUser(userRequest);
+
         var jwtToken = jwtService.generateToken(user);
         return AuthResponse.builder()
                 .token(jwtToken)
@@ -49,8 +50,8 @@ public class AuthService {
                         request.password()
                 )
         );
-        var user = repository.findByEmail(request.email())
-                .orElseThrow();
+
+        var user = userService.getUserByEmail(request.email());
         var jwtToken = jwtService.generateToken(user);
         return AuthResponse.builder()
                 .token(jwtToken)
