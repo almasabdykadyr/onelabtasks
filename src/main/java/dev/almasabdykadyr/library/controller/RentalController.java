@@ -36,7 +36,7 @@ public class RentalController implements RentalApi {
     }
 
     @Override
-    public ResponseEntity<List<Rental>> getAllRentalsByBookId(Long id) {
+    public ResponseEntity<List<Rental>> getRentBySearch(String userId, String bookId) {
         return ResponseEntity.ok(service.findRentalsByBookId(id));
     }
 

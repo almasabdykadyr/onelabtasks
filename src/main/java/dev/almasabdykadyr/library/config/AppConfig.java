@@ -1,8 +1,10 @@
 package dev.almasabdykadyr.library.config;
 
+import dev.almasabdykadyr.library.mapper.AuthorMapper;
 import dev.almasabdykadyr.library.security.JwtProperties;
 import dev.almasabdykadyr.library.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,5 +50,13 @@ public class AppConfig {
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public ModelMapper mapper(AuthorMapper authorMapper) {
+        ModelMapper mapper = new ModelMapper();
+        mapper.addConverter(authorMapper);
+
+        return mapper;
     }
 }

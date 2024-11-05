@@ -27,6 +27,7 @@ public class BookService {
                 .authorId(request.authorId())
                 .createdAt(LocalDateTime.now())
                 .build();
+
         return repository.save(book);
     }
 
@@ -38,6 +39,7 @@ public class BookService {
     @Transactional
     public Book getBookById(Long id) {
 
-        return repository.findById(id).orElseThrow(() -> new BookNotFoundException("book not found with given id"));
+        return repository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException("book not found with given id"));
     }
 }

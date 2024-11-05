@@ -29,20 +29,24 @@ public class UserService {
                 .roles(Set.of(Roles.USER))
                 .createdAt(LocalDateTime.now())
                 .build();
+
         return repository.save(user);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<User> listAllUsers() {
         return repository.findAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public User getUserById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new UserNotFoundException("user not found with given id"));
+        return repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("user not found with given id"));
     }
 
+    @Transactional(readOnly = true)
     public User getUserByEmail(String email) {
-        return repository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("user not found with given id"));
+        return repository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("user not found with given email"));
     }
 }

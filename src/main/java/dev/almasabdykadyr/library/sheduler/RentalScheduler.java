@@ -8,19 +8,20 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class RentalScheduler {
 
-    private final RentalRepository repository;
+    private final RentalRepository rentalRepo;
 
     @Scheduled(cron = "0 0 * * * *")
     public void checkOverdueRentals() {
+        var rentalsIds = rentalRepo.findAllByStatusAndDueDateBefore(RentStatus.RENTED, LocalDate.now())
+                .stream()
+                .map(Rental::getId)
+                .toList();
 
-        List<Rental> overdueRentals = repository.findAll().stream().filter(r -> r.getStatus() == RentStatus.RENTED && r.getDueDate().isBefore(LocalDate.now())).toList();
-        overdueRentals = overdueRentals.stream().peek(r -> r.setStatus(RentStatus.OVERDUE)).toList();
-        repository.saveAll(overdueRentals);
+        rentalRepo.updateByIds(rentalsIds, RentStatus.OVERDUE);
     }
 }

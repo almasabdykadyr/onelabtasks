@@ -23,18 +23,16 @@ public class BookRentalService {
     private static final int NUMBER_OF_DUE_DAYS = 10;
 
     private final RentalRepository rentalRepository;
-
     private final UserService userService;
     private final BookService bookService;
 
     // Rent a book to a user
-    @Transactional(rollbackFor = SQLException.class)
+    @Transactional
     public Rental rent(NewRentalRequest request) {
-        User user = userService.getUserById(request.userId());
         Book book = bookService.getBookById(request.bookId());
 
         Rental rental = Rental.builder()
-                .userId(user.getId())
+                .userId(request.userId())
                 .bookId(book.getId())
                 .status(RentStatus.RENTED)
                 .dueDate(LocalDate.now().plusDays(NUMBER_OF_DUE_DAYS))
@@ -46,13 +44,8 @@ public class BookRentalService {
 
     @Transactional
     public Rental returnRent(Long rentId) {
-        Optional<Rental> optRental = rentalRepository.findById(rentId);
-        if (optRental.isEmpty()) throw new IllegalArgumentException("rental with given id not found");
 
-        Rental rental = optRental.get();
-        rental.setStatus(RentStatus.RETURNED);
-
-        return rental;
+        return rentalRepository.updateByIdAndStatus(RentStatus.RETURNED, rentId);
     }
 
     @Transactional
@@ -62,9 +55,7 @@ public class BookRentalService {
 
     @Transactional
     public List<Rental> findRentalsByUserId(Long userId) {
-        return rentalRepository.findAll().stream()
-                .filter(rental -> rental.getUserId().equals(userId))
-                .toList();
+        return rentalRepository.findAllByUserId(userId);
     }
 
     @Transactional

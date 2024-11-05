@@ -23,6 +23,6 @@ public class AuthorController implements AuthorApi {
 
     @Override
     public ResponseEntity<List<Author>> getAllAuthors() {
-        return ResponseEntity.ok(service.listAllAuthors());
+        return ResponseEntity.ok(service.getAuthors());
     }
 }
