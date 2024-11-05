@@ -9,8 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "authors")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -19,12 +18,15 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank
     @Column(name = "firstname")
     private String firstName;
+
     @NotBlank
     @Column(name = "lastname")
     private String lastName;
+
     @NotNull
     private LocalDateTime createdAt;
 }

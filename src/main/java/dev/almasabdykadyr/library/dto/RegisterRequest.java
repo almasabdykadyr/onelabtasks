@@ -5,4 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 
 @Builder
-public record RegisterRequest(@Email String email, @NotBlank String password, @NotBlank String firstname, @NotBlank String lastname) {}
+public record RegisterRequest(@Email String email,
+                              @NotBlank String password,
+                              @NotBlank String firstname,
+                              @NotBlank String lastname) {}

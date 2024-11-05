@@ -31,9 +31,9 @@ public class AuthService {
                 .lastName(request.lastname())
                 .build();
 
-        User user = userService.addUser(userRequest);
-
+        var user = userService.addUser(userRequest);
         var jwtToken = jwtService.generateToken(user);
+
         return AuthResponse.builder()
                 .token(jwtToken)
                 .build();
@@ -49,6 +49,7 @@ public class AuthService {
 
         var user = userService.getUserByEmail(request.email());
         var jwtToken = jwtService.generateToken(user);
+
         return AuthResponse.builder()
                 .token(jwtToken)
                 .build();

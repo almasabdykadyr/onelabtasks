@@ -52,7 +52,7 @@ class AuthorServiceTest {
     void testListAllAuthors() {
         when(authorRepository.findAll()).thenReturn(List.of(new Author(), new Author()));
 
-        List<Author> authors = service.listAllAuthors();
+        List<Author> authors = service.getAuthors();
 
         assertEquals(2, authors.size());
         verify(authorRepository, times(1)).findAll();

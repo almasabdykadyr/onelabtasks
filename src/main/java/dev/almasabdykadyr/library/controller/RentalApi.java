@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("api/v1")
+@RequestMapping("/api/v1/rent")
 @Tag(name = "Rental API", description = "API for Rental Service")
 public interface RentalApi {
 
@@ -27,7 +27,7 @@ public interface RentalApi {
                     @ApiResponse(responseCode = "404", description = "Invalid input")
             }
     )
-    @PostMapping("/rent")
+    @PostMapping
     ResponseEntity<Rental> rent(@RequestBody @Valid NewRentalRequest request);
 
     @Operation(
@@ -39,7 +39,7 @@ public interface RentalApi {
                     @ApiResponse(responseCode = "404", description = "Rental not found")
             }
     )
-    @PostMapping("/rent/return/{id}")
+    @PostMapping("/return/{id}")
     ResponseEntity<Rental> returnRent(@PathVariable("id") Long id);
 
     @Operation(
@@ -50,7 +50,7 @@ public interface RentalApi {
                             content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Rental.class))))
             }
     )
-    @GetMapping("/rent")
+    @GetMapping
     ResponseEntity<List<Rental>> getAllRentals();
 
     @Operation(
@@ -62,8 +62,9 @@ public interface RentalApi {
                     @ApiResponse(responseCode = "404", description = "Book not found")
             }
     )
-    @GetMapping("/rent/book/{id}")
-    ResponseEntity<List<Rental>> getAllRentalsByBookId(@PathVariable Long id);
+    @GetMapping("/search")
+    ResponseEntity<List<Rental>> getRentBySearch(@RequestParam(required = false) String userId,
+                                                       @RequestParam(required = false) String bookId);
 
     @Operation(
             summary = "Get rentals by user ID",
@@ -74,7 +75,7 @@ public interface RentalApi {
                     @ApiResponse(responseCode = "404", description = "User not found")
             }
     )
-    @GetMapping("/rent/user/{id}")
+    @GetMapping("/user/{id}")
     ResponseEntity<List<Rental>> getAllRentalsByUserId(@PathVariable Long id);
 }
 

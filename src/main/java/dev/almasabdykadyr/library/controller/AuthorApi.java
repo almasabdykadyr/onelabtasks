@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping("api/v1/")
+@RequestMapping("api/v1/authors")
 public interface AuthorApi {
 
     @Operation(
@@ -28,7 +28,7 @@ public interface AuthorApi {
                     @ApiResponse(responseCode = "400", description = "Invalid input")
             }
     )
-    @PostMapping("/authors")
+    @PostMapping
     ResponseEntity<Author> addAuthor(@RequestBody @Valid AuthorRequest request);
 
     @Operation(
@@ -39,6 +39,6 @@ public interface AuthorApi {
                             content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Author.class))))
             }
     )
-    @GetMapping("/authors")
+    @GetMapping
     ResponseEntity<List<Author>> getAllAuthors();
 }
