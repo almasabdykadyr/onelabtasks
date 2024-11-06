@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
         info = @Info(title = "Rental Service API", version = "1.0", description = "API documentation for the Rental Service")
 )
 public class SwaggerConfig {
-
+    
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
