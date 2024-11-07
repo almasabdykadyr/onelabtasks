@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RequestMapping("api/v1/auth")
-@Tag(name = "Auth API", description = "API for Rental Service")
+@Tag(name = "Auth API", description = "API for Authentication Service")
 public interface AuthApi {
 
     @Operation(

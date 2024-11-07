@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 
 import java.util.List;
 
@@ -15,12 +16,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
+
 
 class AuthorServiceTest {
 
     @Mock
     private AuthorRepository authorRepository;
+    @Mock
+    private ModelMapper mapper;
 
     @InjectMocks
     private AuthorService service;
@@ -37,6 +40,7 @@ class AuthorServiceTest {
 
         Author author = Author.builder().firstName("John").lastName("Doe").build();
 
+        when(mapper.map(any(AuthorRequest.class), eq(Author.class))).thenReturn(author);
         when(authorRepository.save(any(Author.class))).thenReturn(author);
 
         Author actual = service.addAuthor(request);

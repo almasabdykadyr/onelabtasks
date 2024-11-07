@@ -39,7 +39,9 @@ public class RentalService {
 
     @Transactional
     public Rental returnRent(Long rentId) {
-        return rentalRepository.updateByIdAndStatus(RentStatus.RETURNED, rentId);
+        rentalRepository.updateByIdAndStatus(RentStatus.RETURNED, rentId);
+
+        return rentalRepository.findById(rentId).orElseThrow(IllegalArgumentException::new);
     }
 
     @Transactional(readOnly = true)
