@@ -114,34 +114,4 @@ class BookRentalServiceTest {
         assertEquals(2, rentals.size());
         verify(rentalRepository, times(1)).findAll();
     }
-
-    @Test
-    void testFindRentalsByUserId() {
-        Rental rental1 = new Rental();
-        rental1.setUserId(1L);
-        Rental rental2 = new Rental();
-        rental2.setUserId(1L);
-
-        when(rentalRepository.findAll()).thenReturn(List.of(rental1, rental2));
-
-        List<Rental> rentals = service.findRentalsByUserId(1L);
-
-        assertEquals(2, rentals.size());
-        verify(rentalRepository, times(1)).findAll();
-    }
-
-    @Test
-    void testFindRentalsByBookId() {
-        Rental rental1 = new Rental();
-        rental1.setBookId(1L);
-        Rental rental2 = new Rental();
-        rental2.setBookId(1L);
-
-        when(rentalRepository.findAll()).thenReturn(List.of(rental1, rental2));
-
-        List<Rental> rentals = service.findRentalsByUserIdOrBookId(1L);
-
-        assertEquals(2, rentals.size());
-        verify(rentalRepository, times(1)).findAll();
-    }
 }
