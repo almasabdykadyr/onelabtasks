@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,12 +18,13 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 class UserServiceTest {
 
     @Mock
     UserRepository repository;
+    @Mock
+    ModelMapper mapper;
 
     @InjectMocks
     UserService service;
@@ -39,6 +41,7 @@ class UserServiceTest {
 
         User user = User.builder().id(52L).email(request.email()).password(request.password()).firstName(request.firstName()).lastName(request.lastName()).createdAt(LocalDateTime.now()).build();
 
+        when(mapper.map(any(UserRequest.class), eq(User.class))).thenReturn(user);
         when(repository.save(any(User.class))).thenReturn(user);
 
         User actual = service.addUser(request);

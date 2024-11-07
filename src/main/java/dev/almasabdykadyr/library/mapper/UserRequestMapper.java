@@ -1,10 +1,14 @@
 package dev.almasabdykadyr.library.mapper;
 
 import dev.almasabdykadyr.library.dto.UserRequest;
+import dev.almasabdykadyr.library.entity.Roles;
 import dev.almasabdykadyr.library.entity.User;
 import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Component
 public class UserRequestMapper implements Converter<UserRequest, User> {
@@ -18,6 +22,8 @@ public class UserRequestMapper implements Converter<UserRequest, User> {
                 .password(request.password())
                 .firstName(request.firstName())
                 .lastName(request.lastName())
+                .roles(Set.of(Roles.USER))
+                .createdAt(LocalDateTime.now())
                 .build();
     }
 }

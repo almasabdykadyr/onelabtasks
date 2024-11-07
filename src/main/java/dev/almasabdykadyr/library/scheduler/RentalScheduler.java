@@ -1,4 +1,4 @@
-package dev.almasabdykadyr.library.sheduler;
+package dev.almasabdykadyr.library.scheduler;
 
 import dev.almasabdykadyr.library.entity.RentStatus;
 import dev.almasabdykadyr.library.entity.Rental;

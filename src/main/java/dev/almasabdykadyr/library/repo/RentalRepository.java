@@ -30,7 +30,7 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
     @Query("update Rental " +
             "set status = :status " +
             "where id =:id")
-    Rental updateByIdAndStatus(RentStatus status, Long id);
+    void updateByIdAndStatus(RentStatus status, Long id);
 
     List<Rental> findAllByStatusAndDueDateBefore(RentStatus status, @NotNull LocalDate dueDate);
 }

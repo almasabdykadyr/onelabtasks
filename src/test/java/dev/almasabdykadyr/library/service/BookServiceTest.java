@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,12 +19,13 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 class BookServiceTest {
 
     @Mock
     private BookRepository repository;
+    @Mock
+    private ModelMapper mapper;
 
     @InjectMocks
     private BookService service;
@@ -38,6 +40,7 @@ class BookServiceTest {
         BookRequest request = new BookRequest("123456789", "Test Book", "Description", 1L, LocalDate.now());
         Book book = Book.builder().id(1L).isbn(request.isbn()).title(request.title()).description(request.description()).publishedAt(request.publishedAt()).authorId(request.authorId()).createdAt(LocalDateTime.now()).build();
 
+        when(mapper.map(any(BookRequest.class), eq(Book.class))).thenReturn(book);
         when(repository.save(any(Book.class))).thenReturn(book);
 
         Book savedBook = service.addBook(request);
