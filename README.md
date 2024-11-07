@@ -12,105 +12,20 @@ This project provides a **Book Rental Service API** that allows users to manage 
     - Rent a book to a user with a 10-day due date.
     - Return a rented book.
     - Fetch all rentals, or filter by user or book.
-    - Auto change rent status to overdue by given time.
+    - Auto change rent status to overdue by given time (Spring Scheduler used).
 ## Technologies Used
 - **Java** (Spring Boot)
 - **JPA/Hibernate** (for persistence)
 - **Lombok** (for reducing boilerplate code)
-
+- **Spring Security** (for security + JWT)
+- **Flyway** (for DB migrations)
+- **Spring Validation** (for validation)
+- **Modelmapper** (for mapping entities)
+- **Spring Security** (for security)
+- **Kafka** (for messaging)
+- **Swagger** (for interactive documentation)
+- **Docker** (for convenient launch on a local server (by using docker compose))
 ---
-
-## API Endpoints
-
-### **User Management**
-- **Add User**  
-  **POST** `/api/rentals/users`  
-  **Request Body:**
-  ```json
-  {
-    "email": "user@example.com",
-    "password": "password123",
-    "firstName": "John",
-    "lastName": "Doe"
-  }
-  ```
-
-### **Book Management**
-- **Add Book**  
-  **POST** `/api/rentals/books`  
-  **Request Body:**
-  ```json
-  {
-    "isbn": "978-1234567890",
-    "title": "Effective Java",
-    "description": "A programming book on Java best practices",
-    "publishedAt": "2020-01-15"
-  }
-  ```
-
-### **Rentals**
-- **Rent a Book**  
-  **POST** `/api/rentals/rent`  
-  **Request Body:**
-  ```json
-  {
-    "userId": 1,
-    "bookId": 1
-  }
-  ```
-
-- **Return a Book**  
-  **POST** `/api/rentals/return/{rentId}`
-
-- **List All Rentals**  
-  **GET** `/api/rentals`
-
-- **Get Rentals by User**  
-  **GET** `/api/rentals/user/{userId}`
-
-- **Get Rentals by Book**  
-  **GET** `/api/rentals/book/{bookId}`
-
----
-
-## Data Models
-
-### **User**
-```java
-User {
-    Long id;
-    String email;
-    String password;
-    String firstName;
-    String lastName;
-}
-```
-
-### **Book**
-```java
-Book {
-    Long id;
-    String isbn;
-    String title;
-    String description;
-    LocalDate publishedAt;
-    LocalDateTime createdAt;
-}
-```
-
-### **Rental**
-```java
-Rental {
-    Long id;
-    User user;
-    Book book;
-    RentStatus status;  // RENTED, RETURNED
-    LocalDate dueDate;
-}
-```
-
----
-
 ## Setup Instructions
 
 1. **Clone the repository**:
