@@ -63,19 +63,7 @@ public interface RentalApi {
             }
     )
     @GetMapping("/search")
-    ResponseEntity<List<Rental>> getRentBySearch(@RequestParam(required = false) String userId,
-                                                       @RequestParam(required = false) String bookId);
-
-    @Operation(
-            summary = "Get rentals by user ID",
-            description = "Retrieves a list of all rentals for a specific user.",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Successful operation",
-                            content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Rental.class)))),
-                    @ApiResponse(responseCode = "404", description = "User not found")
-            }
-    )
-    @GetMapping("/user/{id}")
-    ResponseEntity<List<Rental>> getAllRentalsByUserId(@PathVariable Long id);
+    ResponseEntity<List<Rental>> getRentBySearch(@RequestParam(required = false) Long userId,
+                                                       @RequestParam(required = false) Long bookId);
 }
 

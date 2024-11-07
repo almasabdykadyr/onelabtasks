@@ -1,5 +1,6 @@
-package dev.almasabdykadyr.library.controller;
+package dev.almasabdykadyr.library.controller.impl;
 
+import dev.almasabdykadyr.library.controller.AuthApi;
 import dev.almasabdykadyr.library.dto.AuthRequest;
 import dev.almasabdykadyr.library.dto.AuthResponse;
 import dev.almasabdykadyr.library.dto.RegisterRequest;

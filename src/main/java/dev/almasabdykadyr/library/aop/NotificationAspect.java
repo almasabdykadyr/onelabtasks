@@ -19,7 +19,7 @@ public class NotificationAspect {
     private final NotificationService notificationService;
     private final RentalRepository rentalRepository;
 
-    @Pointcut("execution(* dev.almasabdykadyr.library.service.BookRentalService.rent(..)) ")
+    @Pointcut("execution(* dev.almasabdykadyr.library.service.RentalService.rent(..)) ")
     public void rentMethod() {}
 
     @AfterReturning("rentMethod()")
@@ -29,7 +29,7 @@ public class NotificationAspect {
         notificationService.sendRentCreatedNotification(request.userId());
     }
 
-    @Pointcut("execution(* dev.almasabdykadyr.library.service.BookRentalService.returnRent(..))")
+    @Pointcut("execution(* dev.almasabdykadyr.library.service.RentalService.returnRent(..))")
     public void returnRentMethod() {}
 
     @AfterReturning("returnRentMethod()")
