@@ -21,7 +21,6 @@ This project provides a **Book Rental Service API** that allows users to manage 
 - **Flyway** (for DB migrations)
 - **Spring Validation** (for validation)
 - **Modelmapper** (for mapping entities)
-- **Spring Security** (for security)
 - **Kafka** (for messaging)
 - **Swagger** (for interactive documentation)
 - **Docker** (for convenient launch on a local server (by using docker compose))
