@@ -1,8 +1,9 @@
-package dev.almasabdykadyr.library.controller;
+package dev.almasabdykadyr.library.controller.impl;
 
+import dev.almasabdykadyr.library.controller.RentalApi;
 import dev.almasabdykadyr.library.dto.NewRentalRequest;
 import dev.almasabdykadyr.library.entity.Rental;
-import dev.almasabdykadyr.library.service.BookRentalService;
+import dev.almasabdykadyr.library.service.RentalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,7 @@ import java.util.List;
 @RequestMapping("/api/v1/")
 public class RentalController implements RentalApi {
 
-    private final BookRentalService service;
-
-
+    private final RentalService service;
 
     @Override
     public ResponseEntity<Rental> rent(NewRentalRequest request) {
@@ -36,12 +35,7 @@ public class RentalController implements RentalApi {
     }
 
     @Override
-    public ResponseEntity<List<Rental>> getRentBySearch(String userId, String bookId) {
-        return ResponseEntity.ok(service.findRentalsByBookId(id));
-    }
-
-    @Override
-    public ResponseEntity<List<Rental>> getAllRentalsByUserId(Long id) {
-        return ResponseEntity.ok(service.findRentalsByUserId(id));
+    public ResponseEntity<List<Rental>> getRentBySearch(Long userId, Long bookId) {
+        return ResponseEntity.ok(service.findRentalsByUserIdOrBookId(userId, bookId));
     }
 }

@@ -4,7 +4,6 @@ import dev.almasabdykadyr.library.dto.AuthRequest;
 import dev.almasabdykadyr.library.dto.AuthResponse;
 import dev.almasabdykadyr.library.dto.RegisterRequest;
 import dev.almasabdykadyr.library.dto.UserRequest;
-import dev.almasabdykadyr.library.entity.User;
 import dev.almasabdykadyr.library.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,9 +33,7 @@ public class AuthService {
         var user = userService.addUser(userRequest);
         var jwtToken = jwtService.generateToken(user);
 
-        return AuthResponse.builder()
-                .token(jwtToken)
-                .build();
+        return AuthResponse.builder().token(jwtToken).build();
     }
 
     public AuthResponse authenticate(AuthRequest request) {
@@ -50,8 +47,6 @@ public class AuthService {
         var user = userService.getUserByEmail(request.email());
         var jwtToken = jwtService.generateToken(user);
 
-        return AuthResponse.builder()
-                .token(jwtToken)
-                .build();
+        return AuthResponse.builder().token(jwtToken).build();
     }
 }

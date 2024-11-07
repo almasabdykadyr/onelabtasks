@@ -1,5 +1,6 @@
-package dev.almasabdykadyr.library.controller;
+package dev.almasabdykadyr.library.controller.impl;
 
+import dev.almasabdykadyr.library.controller.AuthorApi;
 import dev.almasabdykadyr.library.dto.AuthorRequest;
 import dev.almasabdykadyr.library.entity.Author;
 import dev.almasabdykadyr.library.service.AuthorService;

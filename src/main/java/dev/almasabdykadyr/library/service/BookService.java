@@ -5,10 +5,10 @@ import dev.almasabdykadyr.library.entity.Book;
 import dev.almasabdykadyr.library.exception.BookNotFoundException;
 import dev.almasabdykadyr.library.repo.BookRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -16,17 +16,12 @@ import java.util.List;
 public class BookService {
 
     private final BookRepository repository;
+    private final ModelMapper mapper;
 
     @Transactional
     public Book addBook(BookRequest request) {
-        Book book = Book.builder()
-                .isbn(request.isbn())
-                .title(request.title())
-                .description(request.description())
-                .publishedAt(request.publishedAt())
-                .authorId(request.authorId())
-                .createdAt(LocalDateTime.now())
-                .build();
+
+        var book = mapper.map(request, Book.class);
 
         return repository.save(book);
     }

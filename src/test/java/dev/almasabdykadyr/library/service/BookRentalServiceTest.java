@@ -29,7 +29,7 @@ class BookRentalServiceTest {
     private RentalRepository rentalRepository;
 
     @InjectMocks
-    private BookRentalService service;
+    private RentalService service;
 
     @BeforeEach
     public void setup() {
@@ -139,7 +139,7 @@ class BookRentalServiceTest {
 
         when(rentalRepository.findAll()).thenReturn(List.of(rental1, rental2));
 
-        List<Rental> rentals = service.findRentalsByBookId(1L);
+        List<Rental> rentals = service.findRentalsByUserIdOrBookId(1L);
 
         assertEquals(2, rentals.size());
         verify(rentalRepository, times(1)).findAll();

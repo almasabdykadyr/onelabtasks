@@ -13,8 +13,7 @@ import java.util.List;
 
 @Repository
 public interface RentalRepository extends JpaRepository<Rental, Long> {
-    List<Rental> findAllByStatusAndDueDateBefore(RentStatus status,
-                                                 @NotNull LocalDate dueDate);
+
     @Modifying
     @Query("UPDATE Rental " +
             "SET status =:status " +
@@ -27,11 +26,11 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
     )
     List<Rental> findByUserIdOrBookId(Long userId, Long bookId);
 
-    List<Rental> findAllByUserId(Long userId);
-
     @Modifying
     @Query("update Rental " +
             "set status = :status " +
             "where id =:id")
     Rental updateByIdAndStatus(RentStatus status, Long id);
+
+    List<Rental> findAllByStatusAndDueDateBefore(RentStatus status, @NotNull LocalDate dueDate);
 }
